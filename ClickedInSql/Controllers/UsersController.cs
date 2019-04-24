@@ -37,3 +37,4 @@ namespace ClickedInSql.Controllers
             return Created($"api/users/{newUser.Id}", newUser);
         }
     }
+}
