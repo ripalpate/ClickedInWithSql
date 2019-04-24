@@ -27,12 +27,12 @@ namespace ClickedInSql.Controllers
 
         public ActionResult AddUser(CreateUserRequest createRequest)
         {
-            if (!_validator.Validate(createRequest))
+            if (_validator.Validate(createRequest))
             {
-                return BadRequest(new { error = "users must have a username, password and display name" });
+                return BadRequest(new { error = "users must have a name, release date, age and is prisioner" });
             }
 
-            var newUser = _userRepository.AddUser(createRequest.Name, createRequest.ReleaseDate, createRequest.Age, createRequest.IsPrisioner);
+            var newUser = _userRepository.AddUser(createRequest.Name, createRequest.ReleaseDate, createRequest.Age, createRequest.IsPrisoner);
 
             return Created($"api/users/{newUser.Id}", newUser);
         }

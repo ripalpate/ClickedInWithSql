@@ -11,6 +11,6 @@ namespace ClickedInSql.Models
         public string Name { get; set; }
         public DateTime ReleaseDate { get; set; }
         public int Age { get; set; }
-        public bool IsPrisioner { get; set; }
+        public bool IsPrisoner { get; set; }
     }
 }

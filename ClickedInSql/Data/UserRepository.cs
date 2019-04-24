@@ -1,6 +1,7 @@
 ﻿using ClickedInSql.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,17 +9,40 @@ namespace ClickedInSql.Data
 {
     public class UserRepository
     {
-        static List<User> _users = new List<User>();
-        public User AddUser(string name, DateTime releaseDate, int age, bool isPrisioner)
+        public User AddUser(string name, DateTime releaseDate, int age, bool isPrisoner)
         {
-            var newUser = new User(name, releaseDate, age, isPrisioner);
+            const string ConnectionString = "Server = localhost; Database = ClinckedIn; Trusted_Connection = True;";
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+                var insertUserCommand = connection.CreateCommand();
+                insertUserCommand.CommandText = @"Insert into users (name, releaseDate, age, isPrisoner)
+                                              Output inserted.*
+                                              Values(@name, @releaseDate, @age, @isPrisoner )";
+                insertUserCommand.Parameters.AddWithValue("name", name);
+                insertUserCommand.Parameters.AddWithValue("releaseDate", releaseDate);
+                insertUserCommand.Parameters.AddWithValue("age", age);
+                insertUserCommand.Parameters.AddWithValue("isPrisoner", isPrisoner);
 
-            newUser.Id = _users.Count + 1;
+                var reader = insertUserCommand.ExecuteReader();
 
-            _users.Add(newUser);
+                if (reader.Read())
+                {
+                    var insertedName = reader["name"].ToString();
+                    var insertedReleaseDate = (DateTime)reader["releaseDate"];
+                    var insertedAge = (int)reader["age"];
+                    var insertedIsPrisoner = (bool)reader["isPrisoner"];
+                    var insertedId = (int)reader["id"];
+                    var newUser = new User(insertedName, insertedReleaseDate, insertedAge, insertedIsPrisoner) { Id = insertedId };
 
-            return newUser;
+                    connection.Close();
+
+                    return newUser;
+                }
+            }
+            throw new Exception("No user found");
+
         }
-
     }
+
 }
