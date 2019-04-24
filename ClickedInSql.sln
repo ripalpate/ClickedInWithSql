@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickedInSql", "ClickedInSql\ClickedInSql.csproj", "{4C1D69C0-60AB-4E1A-9439-65AB71BC7AE6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C1D69C0-60AB-4E1A-9439-65AB71BC7AE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C1D69C0-60AB-4E1A-9439-65AB71BC7AE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C1D69C0-60AB-4E1A-9439-65AB71BC7AE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C1D69C0-60AB-4E1A-9439-65AB71BC7AE6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0761BC08-0536-405F-971A-9460CE90E46F}
+	EndGlobalSection
+EndGlobal
