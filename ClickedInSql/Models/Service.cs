@@ -5,14 +5,18 @@ using System.Threading.Tasks;
 
 namespace ClickedInSql.Models
 {
-    public class Interest
+    public class Service
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
 
-        public Interest(string name)
+        public Service(string name, string description, decimal price)
         {
             Name = name;
+            Description = description;
+            Price = price;
         }
     }
 }
