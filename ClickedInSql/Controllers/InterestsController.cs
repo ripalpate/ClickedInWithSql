@@ -15,14 +15,12 @@ namespace ClickedInSql.Controllers
     public class InterestsController : ControllerBase
     {
         readonly InterestRepository _interestRepository;
-       // readonly UserRepository _userRepository;
         readonly CreateInterestRequestValidator _validator;
 
         public InterestsController()
         {
             _validator = new CreateInterestRequestValidator();
             _interestRepository = new InterestRepository();
-           // _userRepository = new UserRepository();
         }
         [HttpPost]
         public ActionResult AddInterest(CreateInterestRequest createRequest)

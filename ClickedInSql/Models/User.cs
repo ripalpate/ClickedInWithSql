@@ -12,6 +12,8 @@ namespace ClickedInSql.Models
         public DateTime ReleaseDate{ get; set; }
         public int Age { get; set; }
         public bool IsPrisoner { get; set; }
+        public string Interest { get; set; }
+        public string Service { get; set; }
 
         public User(string name, DateTime releaseDate, int age, bool isPrisoner)
         {
@@ -20,6 +22,27 @@ namespace ClickedInSql.Models
             Age = age;
             IsPrisoner = isPrisoner;
             ReleaseDate = releaseDate;
+        }
+
+        public User(string name, DateTime releaseDate, int age, bool isPrisoner, string interest)
+        {
+            Name = name;
+            ReleaseDate = releaseDate;
+            Age = age;
+            IsPrisoner = isPrisoner;
+            ReleaseDate = releaseDate;
+            Interest = interest;
+        }
+
+        public User(string name, DateTime releaseDate, int age, bool isPrisoner, string interest, string service)
+        {
+            Name = name;
+            ReleaseDate = releaseDate;
+            Age = age;
+            IsPrisoner = isPrisoner;
+            ReleaseDate = releaseDate;
+            Interest = interest;
+            Service = service;
         }
     }
 }

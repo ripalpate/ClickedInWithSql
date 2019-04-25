@@ -9,9 +9,9 @@ namespace ClickedInSql.Data
 {
     public class UserRepository
     {
+        const string ConnectionString = "Server = localhost; Database = ClinckedIn; Trusted_Connection = True;";
         public User AddUser(string name, DateTime releaseDate, int age, bool isPrisoner)
         {
-            const string ConnectionString = "Server = localhost; Database = ClinckedIn; Trusted_Connection = True;";
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -41,8 +41,39 @@ namespace ClickedInSql.Data
                 }
             }
             throw new Exception("No user found");
+        }
 
+        public List<User> GetUsersWithInterest()
+        {
+            var users = new List<User>();
+            var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            var getAllUsersWithInterestCommand = connection.CreateCommand();
+            getAllUsersWithInterestCommand.CommandText = @"Select u.* , InterestName = i.Name 
+                                                           from UsersInterests as ui
+                                                           Join Interests as i
+                                                           On i.Id = ui.InterestId
+                                                           Join Users as u
+                                                           On u.Id = ui.UserId";
+
+            var reader = getAllUsersWithInterestCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var id = (int)reader["id"];
+                var username = reader["name"].ToString();
+                var releaseDate= (DateTime)reader["releaseDate"];
+                var age= (int)reader["age"];
+                var isPrisoner = (bool)reader["isPrisoner"];
+                var interest = reader["InterestName"].ToString();
+                var user = new User(username, releaseDate, age, isPrisoner, interest) { Id = id };
+                users.Add(user);
+            }
+
+            connection.Close();
+
+            return users;
         }
     }
-
 }
+

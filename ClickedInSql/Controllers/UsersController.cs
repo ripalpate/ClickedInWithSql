@@ -36,5 +36,12 @@ namespace ClickedInSql.Controllers
 
             return Created($"api/users/{newUser.Id}", newUser);
         }
+
+        [HttpGet]
+        public ActionResult GetUsersWithInterest()
+        {
+            var usersWithInterest = _userRepository.GetUsersWithInterest();
+            return Ok(usersWithInterest);
+        }
     }
 }
