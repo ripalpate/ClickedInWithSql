@@ -16,7 +16,7 @@ namespace ClickedInSql.Data
             {
                 connection.Open();
                 var insertUserServiceCommand = connection.CreateCommand();
-                insertUserServiceCommand.CommandText = @"Insert into usersServices (userId, serviceId)
+                insertUserServiceCommand.CommandText = @"Insert into UsersService (userId, serviceId)
                                               Output inserted.*
                                               Values(@userId, @serviceId )";
                 insertUserServiceCommand.Parameters.AddWithValue("userId", userId);
