@@ -69,5 +69,20 @@ namespace ClickedInSql.Data
 
             return services;
         }
+
+        public void DeleteService(int id)
+        {
+            var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+
+            var deleteServiceCommand = connection.CreateCommand();
+            deleteServiceCommand.CommandText = @"Delete
+                                               From Services
+                                               Where id = @id";
+            deleteServiceCommand.Parameters.AddWithValue("@id", id);
+            var reader = deleteServiceCommand.ExecuteNonQuery();
+
+            connection.Close();
+        }
     }
 }

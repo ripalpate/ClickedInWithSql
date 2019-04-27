@@ -41,5 +41,12 @@ namespace ClickedInSql.Controllers
 
             return Ok(interests);
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteService(int id)
+        {
+            _serviceRepository.DeleteService(id);
+            return Ok();
+        }
     }
 }
