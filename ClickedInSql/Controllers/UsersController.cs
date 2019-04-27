@@ -46,11 +46,5 @@ namespace ClickedInSql.Controllers
             return Ok(users);
         }
 
-        //[HttpGet]
-        //public ActionResult GetUsersWithInterest()
-        //{
-        //    var usersWithInterest = _userRepository.GetUsersWithInterestsAndServices();
-        //    return Ok(usersWithInterest);
-        //}
     }
 }

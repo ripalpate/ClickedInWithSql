@@ -12,8 +12,8 @@ namespace ClickedInSql.Models
         public DateTime ReleaseDate{ get; set; }
         public int Age { get; set; }
         public bool IsPrisoner { get; set; }
-        public List<Interest> Interests { get; set; }
-        public List<Service> Services{ get; set; }
+        public List<string> Interests { get; set; }
+        public List<string> Services { get; set; }
         
 
         public User(string name, DateTime releaseDate, int age, bool isPrisoner)
@@ -25,27 +25,23 @@ namespace ClickedInSql.Models
             ReleaseDate = releaseDate;
         }
 
-        //public User(string name, DateTime releaseDate, int age, bool isPrisoner, string interest)
-        //{
-        //    Name = name;
-        //    ReleaseDate = releaseDate;
-        //    Age = age;
-        //    IsPrisoner = isPrisoner;
-        //    Interest = interest;
-        //}
+        public User(string name, DateTime releaseDate, int age, bool isPrisoner, List<string> interests)
+        {
+            Name = name;
+            ReleaseDate = releaseDate;
+            Age = age;
+            IsPrisoner = isPrisoner;
+            Interests = interests;
+        }
 
-        //public User(string name, DateTime releaseDate, int age, bool isPrisoner, string interest, string service)
-        //{
-        //    Name = name;
-        //    ReleaseDate = releaseDate;
-        //    Age = age;
-        //    IsPrisoner = isPrisoner;
-        //    Interest = interest;
-        //    Service = service;
-        //}
-
-        public User() {
-            
+        public User(string name, DateTime releaseDate, int age, bool isPrisoner, List<string> interests, List<string> services)
+        {
+            Name = name;
+            ReleaseDate = releaseDate;
+            Age = age;
+            IsPrisoner = isPrisoner;
+            Interests = interests;
+            Services = services;
         }
     }
 }

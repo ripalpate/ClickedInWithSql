@@ -70,8 +70,78 @@ namespace ClickedInSql.Data
 
             connection.Close();
 
+            foreach (User user in users)
+            {
+                user.Services = (GetServices(user.Id));
+            }
+
+            foreach (User user in users)
+            {
+                user.Interests = (GetInterests(user.Id));
+            }
+
             return users;
         }
+
+
+        public List<string> GetInterests(int userId)
+        {
+            var interests = new List<string>();
+            var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+            var getUserWithInterestsCommand = connection.CreateCommand();
+            getUserWithInterestsCommand.CommandText = @"Select i.Name InterestName
+                                                        From Interests i
+														Join UsersInterests ui
+														On ui.InterestId = i.Id
+                                                        Where ui.UserId = @userId"; 
+
+            getUserWithInterestsCommand.Parameters.AddWithValue("@userId", userId);
+            var reader = getUserWithInterestsCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var interest = reader["InterestName"].ToString();
+
+                interests.Add(interest);
+            }
+
+            connection.Close();
+
+            return interests;
+        }
+
+       public List<string> GetServices(int userId)
+        {
+            var services = new List<string>();
+
+            var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+
+            var getUserWithServicesCommand = connection.CreateCommand();
+            getUserWithServicesCommand.Parameters.AddWithValue("@userId", userId);
+            getUserWithServicesCommand.CommandText = @"Select s.Name ServiceName
+                                                        From Services s
+														Join UsersService us
+														On us.ServiceId = s.Id
+                                                        Where us.UserId = @userId";
+
+            var reader = getUserWithServicesCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var service = reader["ServiceName"].ToString();
+
+                services.Add(service);
+            }
+
+            connection.Close();
+
+            return services;
+        }
+
+
+
 
         //public List<User> GetUsersWithInterestsAndServices()
         //{
