@@ -155,6 +155,38 @@ namespace ClickedInSql.Data
 
             connection.Close();
         }
+
+        public bool UpdateUser(int id, string name, DateTime releaseDate, int age, bool isPrisoner)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                var updateUserCommand = connection.CreateCommand();
+                updateUserCommand.Parameters.AddWithValue("@id", id);
+                updateUserCommand.CommandText = @"Update Users
+                                                  Set Name = @name,
+                                                  ReleaseDate = @releaseDate,
+                                                  Age = @age,
+                                                  IsPrisoner = @isPrisoner
+                                                  Where id = @id";
+                updateUserCommand.Parameters.AddWithValue("name", name);
+                updateUserCommand.Parameters.AddWithValue("releaseDate", releaseDate);
+                updateUserCommand.Parameters.AddWithValue("age", age);
+                updateUserCommand.Parameters.AddWithValue("isPrisoner", isPrisoner);
+
+
+                var numberOfRowsUpdated = updateUserCommand.ExecuteNonQuery();
+                connection.Close();
+
+                if (numberOfRowsUpdated > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            throw new Exception("No user found");
+        }
     }
 }
 

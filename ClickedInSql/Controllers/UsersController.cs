@@ -49,7 +49,14 @@ namespace ClickedInSql.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteUser(int id)
         {
-             _userRepository.DeleteUser(id);
+            _userRepository.DeleteUser(id);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateUser( int id, UpdateUserRequest updateRequest)
+        {
+            var user = _userRepository.UpdateUser(id, updateRequest.Name, updateRequest.ReleaseDate, updateRequest.Age, updateRequest.IsPrisoner);
             return Ok();
         }
     }

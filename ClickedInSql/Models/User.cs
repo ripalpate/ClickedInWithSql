@@ -22,7 +22,6 @@ namespace ClickedInSql.Models
             ReleaseDate = releaseDate;
             Age = age;
             IsPrisoner = isPrisoner;
-            ReleaseDate = releaseDate;
         }
 
         public User(string name, DateTime releaseDate, int age, bool isPrisoner, List<string> interests)
