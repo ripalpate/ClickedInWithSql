@@ -9,9 +9,10 @@ namespace ClickedInSql.Data
 {
     public class ServiceRepository
     {
+        const string ConnectionString = "Server = localhost; Database = ClinckedIn; Trusted_Connection = True;";
+
         public Service AddService(string name, string description, decimal price)
         {
-            const string ConnectionString = "Server = localhost; Database = ClinckedIn; Trusted_Connection = True;";
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -39,7 +40,34 @@ namespace ClickedInSql.Data
                 }
             }
             throw new Exception("No service found");
+        }
+        public List<Service> GetAllServices()
+        {
+            var services = new List<Service>();
 
+            var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+
+            var getAllServicesCommand = connection.CreateCommand();
+            getAllServicesCommand.CommandText = @"select * from services";
+
+            var reader = getAllServicesCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var id = (int)reader["Id"];
+                var name = reader["Name"].ToString();
+                var description = reader["Description"].ToString();
+                var price = (decimal)reader["Price"];
+
+                var service = new Service(name, description, price) { Id = id };
+
+                services.Add(service);
+            }
+
+            connection.Close();
+
+            return services;
         }
     }
 }

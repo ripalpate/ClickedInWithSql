@@ -38,7 +38,7 @@ Join Users as u
 On u.Id = us.UserId
 Order by u.Id
 
-Select u.*, ServiceName = s.Name, InterestName = i.Name
+Select u.Name, ServiceName = s.Name, InterestName = i.Name
 From Users as u
 Join UsersService as us
 On us.UserId = u.Id
@@ -47,15 +47,4 @@ On s.Id = us.ServiceId
 Join UsersInterests as ui
 On ui.UserId = u.Id
 Join Interests as i
-On i.Id = ui.InterestId;
-
-Select u.*, ServiceName = s.Name, InterestName = i.Name
-From Users as u
-Inner Join UsersService as us
-On u.Id = us.UserId
-Inner Join Services as s
-On s.Id = us.ServiceId
-Left Join UsersInterests as ui
-On ui.UserId = u.Id
-Left Join Interests as i
-On i.Id = ui.InterestId;
+On i.Id = ui.InterestId

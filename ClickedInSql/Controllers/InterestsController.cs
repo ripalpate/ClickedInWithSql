@@ -33,5 +33,13 @@ namespace ClickedInSql.Controllers
             var newInterest = _interestRepository.AddInterest(createRequest.Name);
             return Created($"api/{newInterest}", newInterest);
         }
+
+        [HttpGet]
+        public ActionResult GetAllInterests()
+        {
+            var interests = _interestRepository.GetAllInterests();
+
+            return Ok(interests);
+        }
     }
 }

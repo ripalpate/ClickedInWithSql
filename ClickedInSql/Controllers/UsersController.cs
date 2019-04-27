@@ -37,11 +37,20 @@ namespace ClickedInSql.Controllers
             return Created($"api/users/{newUser.Id}", newUser);
         }
 
+
         [HttpGet]
-        public ActionResult GetUsersWithInterest()
+        public ActionResult GetAllUsers()
         {
-            var usersWithInterest = _userRepository.GetUsersWithInterestsAndServices();
-            return Ok(usersWithInterest);
+            var users = _userRepository.GetAllUsers();
+
+            return Ok(users);
         }
+
+        //[HttpGet]
+        //public ActionResult GetUsersWithInterest()
+        //{
+        //    var usersWithInterest = _userRepository.GetUsersWithInterestsAndServices();
+        //    return Ok(usersWithInterest);
+        //}
     }
 }

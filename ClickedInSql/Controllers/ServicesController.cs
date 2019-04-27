@@ -33,5 +33,13 @@ namespace ClickedInSql.Controllers
             var newService = _serviceRepository.AddService(createRequest.Name, createRequest.Description, createRequest.Price);
             return Created($"api/{newService}", newService);
         }
+
+        [HttpGet]
+        public ActionResult GetAllServices()
+        {
+            var interests = _serviceRepository.GetAllServices();
+
+            return Ok(interests);
+        }
     }
 }

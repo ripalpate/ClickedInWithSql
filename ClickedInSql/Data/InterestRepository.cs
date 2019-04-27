@@ -9,9 +9,9 @@ namespace ClickedInSql.Data
 {
     public class InterestRepository
     {
+        const string ConnectionString = "Server = localhost; Database = ClinckedIn; Trusted_Connection = True;";
         public Interest AddInterest(string name)
         {
-            const string ConnectionString = "Server = localhost; Database = ClinckedIn; Trusted_Connection = True;";
             using (var connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
@@ -35,7 +35,33 @@ namespace ClickedInSql.Data
                 }
             }
             throw new Exception("No interest found");
+        }
 
+        public List<Interest> GetAllInterests()
+        {
+            var interests = new List<Interest>();
+
+            var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+
+            var getAllInterestsCommand = connection.CreateCommand();
+            getAllInterestsCommand.CommandText = "select * from interests";
+
+            var reader = getAllInterestsCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var id = (int)reader["Id"];
+                var name = reader["Name"].ToString();
+
+                var interest = new Interest(name) { Id = id };
+
+                interests.Add(interest);
+            }
+
+            connection.Close();
+
+            return interests;
         }
     }
 }
