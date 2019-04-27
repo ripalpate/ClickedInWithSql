@@ -10,6 +10,7 @@ namespace ClickedInSql.Data
     public class UserRepository
     {
         const string ConnectionString = "Server = localhost; Database = ClinckedIn; Trusted_Connection = True;";
+
         public User AddUser(string name, DateTime releaseDate, int age, bool isPrisoner)
         {
             using (var connection = new SqlConnection(ConnectionString))
@@ -138,6 +139,21 @@ namespace ClickedInSql.Data
             connection.Close();
 
             return services;
+        }
+
+        public void DeleteUser(int id)
+        {
+            var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+
+            var deleteUserCommand = connection.CreateCommand();
+            deleteUserCommand.CommandText = @"Delete
+                                               From Users
+                                               Where id = @id";
+            deleteUserCommand.Parameters.AddWithValue("id", id);
+            var reader = deleteUserCommand.ExecuteNonQuery();
+
+            connection.Close();
         }
     }
 }

@@ -46,5 +46,11 @@ namespace ClickedInSql.Controllers
             return Ok(users);
         }
 
+        [HttpDelete("{id}")]
+        public ActionResult DeleteUser(int id)
+        {
+             _userRepository.DeleteUser(id);
+            return Ok();
+        }
     }
 }
