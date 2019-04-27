@@ -40,7 +40,7 @@ namespace ClickedInSql.Controllers
         [HttpGet]
         public ActionResult GetUsersWithInterest()
         {
-            var usersWithInterest = _userRepository.GetUsersWithInterest();
+            var usersWithInterest = _userRepository.GetUsersWithInterestsAndServices();
             return Ok(usersWithInterest);
         }
     }

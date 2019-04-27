@@ -43,7 +43,7 @@ namespace ClickedInSql.Data
             throw new Exception("No user found");
         }
 
-        public List<User> GetUsersWithInterest()
+        public List<User> GetUsersWithInterestsAndServices()
         {
             var users = new List<User>();
             var connection = new SqlConnection(ConnectionString);
@@ -54,7 +54,7 @@ namespace ClickedInSql.Data
                                                            Join Interests as i
                                                            On i.Id = ui.InterestId
                                                            Join Users as u
-                                                           On u.Id = ui.UserId";
+                                                           On u.Id = ui.UserId;";
 
             var reader = getAllUsersWithInterestCommand.ExecuteReader();
 
@@ -69,10 +69,55 @@ namespace ClickedInSql.Data
                 var user = new User(username, releaseDate, age, isPrisoner, interest) { Id = id };
                 users.Add(user);
             }
+            reader.Close();
+
+            var getAllUsersWithServiceCommand = connection.CreateCommand();
+            getAllUsersWithServiceCommand.CommandText = @"Select u.* , ServiceName = s.Name
+                                                         from UsersService as us
+                                                         Join Services as s
+                                                         On s.Id = us.ServiceId
+                                                         Join Users as u
+                                                         On u.Id = us.UserId
+                                                         Order by u.Id";
+
+            var serviceReader = getAllUsersWithServiceCommand.ExecuteReader();
+
+            while (serviceReader.Read())
+            {
+                var id = (int)serviceReader["id"];
+                var service = (string)serviceReader["ServiceName"];
+                for (var i = 0; i < users.Count; i++) {
+                    if (users[i].Id == id)
+                    {
+                        if (users[i].Service != null && users[i].Service != "")
+                        {
+                            users[i].Service += ", " + service;
+                        }
+                        else
+                        {
+                            users[i].Service += service;
+                        }
+                    }
+                }
+
+
+            }
 
             connection.Close();
 
-            return users;
+            var userWithInterests = users.GroupBy(u => new { u.Id, u.Name, u.ReleaseDate, u.Age, u.IsPrisoner, u.Service })
+                .Select(user => new User()
+                {
+                    Id = user.Key.Id,
+                    Name = user.Key.Name,
+                    ReleaseDate = user.Key.ReleaseDate,
+                    Age = user.Key.Age,
+                    IsPrisoner = user.Key.IsPrisoner,
+                    Interest = String.Join(", ", user.Select(i => i.Interest)),
+                    Service = user.Key.Service
+                }).ToList();
+
+            return userWithInterests;
         }
     }
 }
