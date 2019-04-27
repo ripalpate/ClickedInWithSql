@@ -175,7 +175,6 @@ namespace ClickedInSql.Data
                 updateUserCommand.Parameters.AddWithValue("age", age);
                 updateUserCommand.Parameters.AddWithValue("isPrisoner", isPrisoner);
 
-
                 var numberOfRowsUpdated = updateUserCommand.ExecuteNonQuery();
                 connection.Close();
 

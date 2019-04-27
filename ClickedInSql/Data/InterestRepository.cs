@@ -63,5 +63,20 @@ namespace ClickedInSql.Data
 
             return interests;
         }
+
+        public void DeleteInterest(int id)
+        {
+            var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+
+            var deleteInterestCommand = connection.CreateCommand();
+            deleteInterestCommand.CommandText = @"Delete
+                                               From Interests
+                                               Where id = @id";
+            deleteInterestCommand.Parameters.AddWithValue("@id", id);
+            var reader = deleteInterestCommand.ExecuteNonQuery();
+
+            connection.Close();
+        }
     }
 }
