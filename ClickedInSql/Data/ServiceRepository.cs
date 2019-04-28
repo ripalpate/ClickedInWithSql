@@ -84,5 +84,34 @@ namespace ClickedInSql.Data
 
             connection.Close();
         }
+
+        public bool UpdateService(int id, string name, string description, int price)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                var updateServiceCommand = connection.CreateCommand();
+                updateServiceCommand.Parameters.AddWithValue("@id", id);
+                updateServiceCommand.CommandText = @"Update Services
+                                                  Set Name = @name,
+                                                  Description = @description,
+                                                  Price = @price
+                                                  Where id = @id";
+                updateServiceCommand.Parameters.AddWithValue("name", name);
+                updateServiceCommand.Parameters.AddWithValue("description", description);
+                updateServiceCommand.Parameters.AddWithValue("price", price);
+
+                var numberOfRowsUpdated = updateServiceCommand.ExecuteNonQuery();
+                connection.Close();
+
+                if (numberOfRowsUpdated > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            throw new Exception("service is not updated");
+        }
     }
 }

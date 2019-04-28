@@ -184,7 +184,7 @@ namespace ClickedInSql.Data
                 }
                 return false;
             }
-            throw new Exception("No user found");
+            throw new Exception("User is not updated.");
         }
     }
 }

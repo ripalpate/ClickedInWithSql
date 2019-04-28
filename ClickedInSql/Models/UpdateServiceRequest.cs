@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace ClickedInSql.Models
 {
-    public class UpdateInterestRequest
+    public class UpdateServiceRequest
     {
         public string Name { get; set; }
-        public DateTime ReleaseDate { get; set; }
-        public int Age { get; set; }
-        public bool IsPrisoner { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
     }
 }

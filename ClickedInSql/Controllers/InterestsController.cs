@@ -48,5 +48,12 @@ namespace ClickedInSql.Controllers
             _interestRepository.DeleteInterest(id);
             return Ok();
         }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateInterest(int id, UpdateInterestRequest updateRequest)
+        {
+            var user = _interestRepository.UpdateInterest(id, updateRequest.Name);
+            return Ok();
+        }
     }
 }

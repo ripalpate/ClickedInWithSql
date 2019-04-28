@@ -78,5 +78,30 @@ namespace ClickedInSql.Data
 
             connection.Close();
         }
+
+        public bool UpdateInterest(int id, string name)
+        {
+            using (var connection = new SqlConnection(ConnectionString))
+            {
+                connection.Open();
+
+                var updateInterestCommand = connection.CreateCommand();
+                updateInterestCommand.Parameters.AddWithValue("@id", id);
+                updateInterestCommand.CommandText = @"Update Interests
+                                                  Set Name = @name
+                                                  Where id = @id";
+                updateInterestCommand.Parameters.AddWithValue("name", name);
+
+                var numberOfRowsUpdated = updateInterestCommand.ExecuteNonQuery();
+                connection.Close();
+
+                if (numberOfRowsUpdated > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            throw new Exception("interest is not updated");
+        }
     }
 }
