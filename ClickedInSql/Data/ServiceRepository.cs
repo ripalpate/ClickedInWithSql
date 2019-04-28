@@ -85,7 +85,7 @@ namespace ClickedInSql.Data
             connection.Close();
         }
 
-        public bool UpdateService(int id, string name, string description, int price)
+        public bool UpdateService(int id, string name, string description, decimal price)
         {
             using (var connection = new SqlConnection(ConnectionString))
             {

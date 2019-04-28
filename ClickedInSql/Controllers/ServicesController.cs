@@ -16,18 +16,20 @@ namespace ClickedInSql.Controllers
     {
         readonly ServiceRepository _serviceRepository;
         readonly CreateServiceRequestValidator _validator;
+        readonly UpdateServiceRequestValidator _updateValidator;
 
         public ServicesController()
         {
             _validator = new CreateServiceRequestValidator();
             _serviceRepository = new ServiceRepository();
+            _updateValidator = new UpdateServiceRequestValidator();
         }
         [HttpPost]
         public ActionResult AddInterest(CreateServiceRequest createRequest)
         {
-            if (_validator.ValidateInterest(createRequest))
+            if (_validator.ValidateService(createRequest))
             {
-                return BadRequest(new { error = "users must have an interest name" });
+                return BadRequest(new { error = "users must have an service name" });
             }
 
             var newService = _serviceRepository.AddService(createRequest.Name, createRequest.Description, createRequest.Price);
@@ -47,6 +49,17 @@ namespace ClickedInSql.Controllers
         {
             _serviceRepository.DeleteService(id);
             return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateService(int id, UpdateServiceRequest updateRequest)
+        {
+            if (_updateValidator.ValidateService(updateRequest))
+            {
+                return BadRequest(new { error = "users must have an service name" });
+            }
+            _serviceRepository.UpdateService(id, updateRequest.Name, updateRequest.Description, updateRequest.Price);
+            return Ok("Service Updated");
         }
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ClickedInSql.Validators
 {
-    public class CreateServiceRequestValidator
+    public class UpdateServiceRequestValidator
     {
-        public bool ValidateService(CreateServiceRequest request)
+        public bool ValidateService(UpdateServiceRequest request)
         {
             return string.IsNullOrEmpty(request.Name);
         }
