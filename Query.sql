@@ -6,7 +6,8 @@ Select * from UsersInterests;
 Select * from Interests;
 
 --Get Friends with same interest
-Select u.Name, ui.*, i.Name from UsersInterests as ui
+Select u.Name, i.Name 
+from UsersInterests as ui
 Join Interests as i
 ON ui.InterestId = i.Id AND i.Name = @InterestName
 Join Users as u 

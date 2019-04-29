@@ -186,6 +186,39 @@ namespace ClickedInSql.Data
             }
             throw new Exception("User is not updated.");
         }
+
+        public List<object> GetOtherUsersWithSameInterest(int userId, string InterestName)
+        {
+            var UsersWithSameInterest = new List<object>();
+
+            var connection = new SqlConnection(ConnectionString);
+            connection.Open();
+
+            var getOtherUsersWithSameInterestCommand = connection.CreateCommand();
+            getOtherUsersWithSameInterestCommand.CommandText = @"Select u.Name as UserName, i.Name as InterestName 
+                                                                from UsersInterests as ui
+                                                                Join Interests as i
+                                                                On ui.InterestId = i.Id And i.Name = @InterestName
+                                                                Join Users as u 
+                                                                On ui.UserId = u.Id And u.Id != @userId;";
+            getOtherUsersWithSameInterestCommand.Parameters.AddWithValue("@InterestName", InterestName);
+            getOtherUsersWithSameInterestCommand.Parameters.AddWithValue("@userId", userId);
+
+            var reader = getOtherUsersWithSameInterestCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                var istName = reader["InterestName"].ToString();
+                var userName = reader["UserName"].ToString();
+                var userWithInterest = new { UserName = userName, InterestName= istName };
+
+                UsersWithSameInterest.Add(userWithInterest);
+            }
+
+            connection.Close();
+
+            return UsersWithSameInterest;
+        }
     }
 }
 

@@ -54,10 +54,17 @@ namespace ClickedInSql.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateUser( int id, UpdateInterestRequest updateRequest)
+        public ActionResult UpdateUser(int id, UpdateInterestRequest updateRequest)
         {
             var user = _userRepository.UpdateUser(id, updateRequest.Name, updateRequest.ReleaseDate, updateRequest.Age, updateRequest.IsPrisoner);
             return Ok();
+        }
+
+        [HttpGet("{id}/{interestName}")]
+        public ActionResult UsersWithSameInterest(int id, string interestName)
+        {
+            var usersWithSameInterest = _userRepository.GetOtherUsersWithSameInterest(id, interestName);
+            return Ok(usersWithSameInterest);
         }
     }
 }
